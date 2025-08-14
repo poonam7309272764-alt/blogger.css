@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Job Portal</title>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        background: #f5f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .login-container {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        width: 350px;
+        text-align: center;
+    }
+    h2 {
+        margin-bottom: 20px;
+        color: #0078d7;
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background: #0078d7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #005bb5;
+    }
+    .message {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+    a {
+        color: #0078d7;
+        text-decoration: none;
+    }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button id="loginBtn">Login</button>
+    <div class="message" id="message"></div>
+    <p>Don't have an account? <a href="signup.html" target="_blank">Signup</a></p>
+</div>
+
+<!-- Firebase Auth Script -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCJoE-RUZZhw6cnba86k3Nc_7Qv-c07i7U",
+    authDomain: "all-india-form-5842f.firebaseapp.com",
+    projectId: "all-india-form-5842f",
+    storageBucket: "all-india-form-5842f.firebasestorage.app",
+    messagingSenderId: "100996657452",
+    appId: "1:100996657452:web:5a3e5cec26af866903bc89",
+    measurementId: "G-3TR6CGF4E6"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+document.getElementById('loginBtn').addEventListener('click', () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const msg = document.getElementById('message');
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            msg.style.color = "green";
+            msg.textContent = "Login successful! Redirecting...";
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1500);
+        })
+        .catch((error) => {
+            msg.style.color = "red";
+            msg.textContent = error.message;
+        });
+});
+</script>
+
+</body>
+</html>
